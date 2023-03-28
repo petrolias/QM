@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.DAL.Abstractions", "QM.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Core.Abstractions", "QM.Core.Abstractions\QM.Core.Abstractions.csproj", "{70E44F6B-6097-4514-AE8A-761E3BA728A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.DAL", "QM.DAL\QM.DAL.csproj", "{02A57B29-1311-4C55-9476-FCB7FE3D27A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.DAL.Models", "QM.DAL.Models\QM.DAL.Models.csproj", "{EA7FDC7E-2029-4BF5-B39D-87BB961215D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{70E44F6B-6097-4514-AE8A-761E3BA728A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70E44F6B-6097-4514-AE8A-761E3BA728A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70E44F6B-6097-4514-AE8A-761E3BA728A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02A57B29-1311-4C55-9476-FCB7FE3D27A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02A57B29-1311-4C55-9476-FCB7FE3D27A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02A57B29-1311-4C55-9476-FCB7FE3D27A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02A57B29-1311-4C55-9476-FCB7FE3D27A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA7FDC7E-2029-4BF5-B39D-87BB961215D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA7FDC7E-2029-4BF5-B39D-87BB961215D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA7FDC7E-2029-4BF5-B39D-87BB961215D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA7FDC7E-2029-4BF5-B39D-87BB961215D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
