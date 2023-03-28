@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\QM.Models.Abstractions\QM.Models.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

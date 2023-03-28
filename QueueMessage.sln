@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Models", "QM.Models\QM.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Models.Validations", "QM.Models.Validations\QM.Models.Validations.csproj", "{DA3D7D64-E904-423D-A429-1756AB7830E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Models.Abstractions", "QM.Models.Abstractions\QM.Models.Abstractions.csproj", "{6FDF43E3-31D7-4E8C-8981-43CA7326852C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DA3D7D64-E904-423D-A429-1756AB7830E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA3D7D64-E904-423D-A429-1756AB7830E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA3D7D64-E904-423D-A429-1756AB7830E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FDF43E3-31D7-4E8C-8981-43CA7326852C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FDF43E3-31D7-4E8C-8981-43CA7326852C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FDF43E3-31D7-4E8C-8981-43CA7326852C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FDF43E3-31D7-4E8C-8981-43CA7326852C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
