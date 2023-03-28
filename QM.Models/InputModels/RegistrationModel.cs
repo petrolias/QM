@@ -9,7 +9,7 @@ namespace QM.Models.InputModels
 {
     public class RegistrationModel : BaseRegistrationModel, IRegistrationModel
     {
-        public int Userid { get; set; }
-        public string Username { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
     }
 }
