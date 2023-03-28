@@ -5,7 +5,7 @@ using QM.Core.Abstractions;
 
 namespace QM.Core.IO
 {
-    public class FileIO : ISTorage
+    public class FileIO : IStorage, IFileIO
     {
         private readonly string _basePath;
 

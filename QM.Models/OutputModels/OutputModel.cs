@@ -22,7 +22,7 @@ namespace QM.Models.OutputModels
             this.PersistedDateTimeAt = persistedDateTimeAt;
             this.PersistedDateTimeEnd = persistedDateTimeEnd;
             this.PersistSystemTypes = persistSystemTypes;
-            this.TotalPesistTime = this.GetTotalPesistTime()
+            this.TotalPesistTime = this.GetTotalPesistTime();
         }      
 
         private TimeSpan GetTotalPesistTime()

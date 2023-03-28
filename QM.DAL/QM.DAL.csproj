@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\QM.DAL.Abstractions\QM.DAL.Abstractions.csproj" />
     <ProjectReference Include="..\QM.DAL.Models\QM.DAL.Models.csproj" />
   </ItemGroup>
 

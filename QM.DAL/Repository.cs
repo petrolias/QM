@@ -1,20 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QM.Core.Abstractions;
-using QM.DAL;
+﻿using QM.DAL.Abstractions;
 using QM.Models.Abstractions;
 
-namespace QM.Core.DB
+namespace QM.DAL
 {
-    public class DbStorage : IStorage
+    public class Repository : IRepository
     {
-        private readonly QMDBContext _dbContext;   
-
-        public DbStorage(QMDBContext dbContext)
+        private readonly QMDBContext _dbContext;
+        public Repository(QMDBContext context)
         {
-            this._dbContext = dbContext;
+            this._dbContext = context;
         }
-       
-        public async Task SaveAsync<TRegistrationModel>(TRegistrationModel registrationModel)
+
+        public async Task SaveChangesAsync<TRegistrationModel>(TRegistrationModel registrationModel)
                 where TRegistrationModel : IRegistrationModel
         {
             try
