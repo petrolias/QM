@@ -12,7 +12,7 @@ namespace QM.Core
         public CommandExecutor(List<PersistSystemType> toExecuteList, string message)
         {
             this.toExecuteList = toExecuteList;
-            executedList = new List<PersistSystemType>();
+            this.executedList = new List<PersistSystemType>();
             this.executionDateTime = DateTime.UtcNow;
             this.message = message;
         }
