@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Serilog.Context;
 using Serilog.Extensions.Logging;
 
-namespace QM.TestProject
+namespace QM.Core.Extensions
 {
-    internal static class ServiceExtentions
+    public static class ServiceExtentions
     {
         private const string InMemoryDataBaseName = "InMemoryDatabase";
 
@@ -24,26 +24,18 @@ namespace QM.TestProject
                .AddDbContext<QMDBContext>(options => options.UseInMemoryDatabase(databaseName: InMemoryDataBaseName))
                .AddScoped<IRepository, Repository>();
             return serviceCollection;
-        }
-
-        //public static IServiceCollection AddLoggerService(this IServiceCollection serviceCollection)
-        //{
-        //    Log.Logger = new LoggerConfiguration()
-        //        .WriteTo.Console()
-        //        .CreateLogger();
-        //    serviceCollection.AddSingleton(Log.Logger);
-        //    return serviceCollection;
-        //}
+        }       
 
         public static IServiceCollection AddLoggerService(this IServiceCollection serviceCollection)
         {
             Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Debug()               
                .WriteTo.Console()
-               .CreateLogger();
+               .CreateLogger();      
 
             serviceCollection
                 .AddLogging(loggingBuilder =>
-                {
+                {                    
                     loggingBuilder.ClearProviders();
                     loggingBuilder.AddSerilog(Log.Logger);
                 });
@@ -53,6 +45,12 @@ namespace QM.TestProject
         public static IRepository GetRepository(this IServiceProvider serviceProvider)
         {
             return serviceProvider.GetService<IRepository>() ?? throw new NullReferenceException();
+        }
+
+        public static ILogger<T> GetLogger<T>(this IServiceProvider serviceProvider)
+        {
+            return serviceProvider.GetService<ILogger<T>>() ?? throw new NullReferenceException();
+
         }
 
     }

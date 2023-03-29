@@ -3,25 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Core", "QM.Core\QM.Core.csproj", "{F5D1B25F-E96C-4AD4-A6F1-9D4829421F6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.Core", "QM.Core\QM.Core.csproj", "{F5D1B25F-E96C-4AD4-A6F1-9D4829421F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Models", "QM.Models\QM.Models.csproj", "{7A677E5B-71C2-4D8D-8CF4-0D7BCE435FC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.Models", "QM.Models\QM.Models.csproj", "{7A677E5B-71C2-4D8D-8CF4-0D7BCE435FC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Models.Validations", "QM.Models.Validations\QM.Models.Validations.csproj", "{DA3D7D64-E904-423D-A429-1756AB7830E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.Models.Validations", "QM.Models.Validations\QM.Models.Validations.csproj", "{DA3D7D64-E904-423D-A429-1756AB7830E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Models.Abstractions", "QM.Models.Abstractions\QM.Models.Abstractions.csproj", "{6FDF43E3-31D7-4E8C-8981-43CA7326852C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.Models.Abstractions", "QM.Models.Abstractions\QM.Models.Abstractions.csproj", "{6FDF43E3-31D7-4E8C-8981-43CA7326852C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.TestProject", "QM.TestProject\QM.TestProject.csproj", "{F009239C-1BDE-41C8-A2CB-4489F2027142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.TestProject", "QM.TestProject\QM.TestProject.csproj", "{F009239C-1BDE-41C8-A2CB-4489F2027142}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.Core.Abstractions", "QM.Core.Abstractions\QM.Core.Abstractions.csproj", "{70E44F6B-6097-4514-AE8A-761E3BA728A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.Core.Abstractions", "QM.Core.Abstractions\QM.Core.Abstractions.csproj", "{70E44F6B-6097-4514-AE8A-761E3BA728A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.DAL", "QM.DAL\QM.DAL.csproj", "{02A57B29-1311-4C55-9476-FCB7FE3D27A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.DAL", "QM.DAL\QM.DAL.csproj", "{02A57B29-1311-4C55-9476-FCB7FE3D27A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.DAL.Models", "QM.DAL.Models\QM.DAL.Models.csproj", "{EA7FDC7E-2029-4BF5-B39D-87BB961215D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.DAL.Models", "QM.DAL.Models\QM.DAL.Models.csproj", "{EA7FDC7E-2029-4BF5-B39D-87BB961215D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.DAL.Abstractions", "QM.DAL.Abstractions\QM.DAL.Abstractions.csproj", "{587F0D80-49EB-46C5-849E-06DFF421E452}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.DAL.Abstractions", "QM.DAL.Abstractions\QM.DAL.Abstractions.csproj", "{587F0D80-49EB-46C5-849E-06DFF421E452}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.QueueMessage", "QM.QueueMessage\QM.QueueMessage.csproj", "{2846DF86-D52C-4373-8C49-7EA3B5856D6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.QueueMessage", "QM.QueueMessage\QM.QueueMessage.csproj", "{2846DF86-D52C-4373-8C49-7EA3B5856D6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QA.ConsoleApp", "QA.ConsoleApp\QA.ConsoleApp.csproj", "{84067465-F730-4D80-A8E6-F3AC251C5E65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{2846DF86-D52C-4373-8C49-7EA3B5856D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2846DF86-D52C-4373-8C49-7EA3B5856D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2846DF86-D52C-4373-8C49-7EA3B5856D6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84067465-F730-4D80-A8E6-F3AC251C5E65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84067465-F730-4D80-A8E6-F3AC251C5E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84067465-F730-4D80-A8E6-F3AC251C5E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84067465-F730-4D80-A8E6-F3AC251C5E65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
