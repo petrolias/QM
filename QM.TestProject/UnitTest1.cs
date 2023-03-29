@@ -3,15 +3,17 @@ using Microsoft.Extensions.DependencyInjection;
 using QM.DAL;
 using QM.DAL.Abstractions;
 using QM.DAL.Models;
-using QM.Models.InputModels;
-
+using QM.Core.Abstractions.Enums;
+using QM.Core;
 namespace QM.TestProject
 {
 
     public class UnitTest1
     {
-        private IServiceCollection _services { get; set; }
         private const string InMemoryDataBaseName = "InMemoryDatabase";
+        private IServiceCollection _services { get; set; }
+        private IRepository _repository { get => this._services.BuildServiceProvider().GetService<IRepository>() ?? throw new NullReferenceException(); }
+
         public UnitTest1()
         {                                    
             this._services = new ServiceCollection();
@@ -20,18 +22,25 @@ namespace QM.TestProject
                 .AddTransient<IRepository, Repository>();            
         }
         [Fact]
-        public void Test1()
+        public void TestRepositorySaveChangesAsync()
         {
-            var registrationModel = new RegistrationModelDB();
-            var service = this._services.BuildServiceProvider().GetService<IRepository>()?? throw new NullReferenceException();
-            service.SaveChangesAsync(registrationModel);
-          
-
+            var registrationModel = new RegistrationModelDB();            
+            this._repository.SaveChangesAsync(registrationModel);
             // Assert that the entity was added successfully
-            //Assert.NotEqual(0, myEntity.Id);
-
-            //IFileStorage _fileStorage;
-
+            Assert.NotEqual(0, registrationModel.Id);            
         }
+
+        [Fact]
+        public async void TestTaskAsync()
+        {
+            var toExecuteList = new List<PersistSystemType>() {
+                PersistSystemType.File,
+                PersistSystemType.Db                
+            };                        
+            var executor = new CommandExecutor(toExecuteList, "Test message");
+
+            await executor.ExecuteCommandsAsync();
+        }
+
     }
 }

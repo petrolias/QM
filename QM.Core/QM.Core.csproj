@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RegistrationService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
@@ -14,6 +22,7 @@
     <ProjectReference Include="..\QM.Core.Abstractions\QM.Core.Abstractions.csproj" />
     <ProjectReference Include="..\QM.DAL\QM.DAL.csproj" />
     <ProjectReference Include="..\QM.Models.Abstractions\QM.Models.Abstractions.csproj" />
+    <ProjectReference Include="..\QM.QueueMessage\QM.QueueMessage.csproj" />
   </ItemGroup>
 
 </Project>
