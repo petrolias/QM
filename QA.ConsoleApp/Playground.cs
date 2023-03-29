@@ -5,14 +5,16 @@ using QM.Core.Abstractions.Enums;
 using QM.Core.Extensions;
 using Microsoft.Extensions.Logging;
 using QM.Core;
+using QM.Models.InputModels;
+using QM.Core.Abstractions;
 
 namespace QA.ConsoleApp
 {
-    public class Playground
+    public class Playground<TAppContext>
     {
         private IServiceProvider _serviceProvider { get; set; }
         private IRepository _repository { get => this._serviceProvider.GetRepository(); }
-        private ILogger<Program> _logger { get => this._serviceProvider.GetLogger<Program>(); }
+        private ILogger<TAppContext> _logger { get => this._serviceProvider.GetLogger<TAppContext>(); }
 
         public Playground()
         {
@@ -22,13 +24,14 @@ namespace QA.ConsoleApp
                 .BuildServiceProvider();
         }
         public async Task TestTaskAsync()
-        {
-            this._logger.LogInformation("Test");
-            var toExecuteList = new List<PersistSystemType>() {
-                PersistSystemType.File,
-                PersistSystemType.Db
-            };
-            var executor = new CommandExecutor(toExecuteList, "Test message");
+        {            
+            this._logger.LogInformation("Executing Test task async");
+ 
+            var registrationModel = new RegistrationModel() { UserId = 1, UserName = "TestUsername" };
+            var executor = new CommandExecutor<TAppContext, RegistrationModel>(
+                this._logger, 
+                ExecutionStrategy.DefaultPersistSystemTypesStragegy, 
+                registrationModel);
 
             await executor.ExecuteCommandsAsync();
         }
