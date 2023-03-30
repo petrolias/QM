@@ -7,7 +7,7 @@ namespace QM.Core
 
         private bool HasUnexecutedItem()
         {
-            return this.executedList.Any(x => x.Item2 == false);
+            return this._executedList.Any(x => x.Item2 == false);
         }
 
         /// <summary>
@@ -16,12 +16,12 @@ namespace QM.Core
         private async Task ExecuteRetryStrategy()
         {
             //Add retry logic here if needed
-            if (IsRetryStrategyEnabled &&
+            if (isRetryStrategyEnabled &&
                 this.HasUnexecutedItem())
             {
                 var executor = new CommandExecutor<TAppContext, TInputModel>(
                     this._logger, this._repository,
-                    toExecuteList, this._inputModel);
+                    _toExecuteList, this._inputModel);
                 await executor.ExecuteCommandsAsync();
             }
         }

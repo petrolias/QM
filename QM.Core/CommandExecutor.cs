@@ -14,9 +14,9 @@ namespace QM.Core
         where TInputModel : IRegistrationModel
     {
 
-        private const bool IsRetryStrategyEnabled = false;
-        private List<PersistStrategyType> toExecuteList;
-        private List<(PersistStrategyType, bool)> executedList;
+        private readonly bool _isRetryStrategyEnabled;
+        private List<PersistStrategyType> _toExecuteList;
+        private List<(PersistStrategyType, bool)> _executedList;
         private TInputModel _inputModel;
         private readonly ILogger<TAppContext> _logger;
         private readonly IRepository _repository;
@@ -26,7 +26,7 @@ namespace QM.Core
         //Returns executed persist system types
         private List<PersistStrategyType> GetExecutedPersistStrategyTypes()
         {
-            return this.executedList.Where(x => x.Item2 == true).Select(x => x.Item1).ToList();
+            return this._executedList.Where(x => x.Item2 == true).Select(x => x.Item1).ToList();
         }
 
         
@@ -34,14 +34,19 @@ namespace QM.Core
         public CommandExecutor(
             ILogger<TAppContext> logger,
             IRepository repository,
-            List<PersistStrategyType> toExecuteList, TInputModel inputModel)
+            List<PersistStrategyType> toExecuteList, 
+            TInputModel inputModel,
+            bool isRetryStrategyEnabled = false
+            )
         {
             this._logger = logger;
             this._repository = repository;
 
-            this.toExecuteList = toExecuteList;
-            this.executedList = new List<(PersistStrategyType, bool)>();
+            this._toExecuteList = toExecuteList;
+            this._executedList = new List<(PersistStrategyType, bool)>();
             this._inputModel = inputModel;
+            this._isRetryStrategyEnabled = isRetryStrategyEnabled;
+
         }
 
         public async Task ExecuteCommandsAsync()
@@ -51,7 +56,7 @@ namespace QM.Core
 
             //execute the tasks
             var tasks = new List<Task>();
-            foreach (var command in toExecuteList)
+            foreach (var command in _toExecuteList)
             {
                 tasks.Add(this.ExecuteCommandAsync(command));
             }
@@ -70,13 +75,13 @@ namespace QM.Core
             try
             {
                 await ExecutePersistStrategy(persistStrategyType, this._inputModel);
-                executedList.Add((persistStrategyType, true));
+                _executedList.Add((persistStrategyType, true));
             }
             catch (Exception e)
             {
                 // Record the failure time and log the exception message
                 this._logger.LogError($"{_guid} Failed to execute {persistStrategyType}: {e.Message}");
-                executedList.Add((persistStrategyType, false));
+                _executedList.Add((persistStrategyType, false));
             }
         }      
 
