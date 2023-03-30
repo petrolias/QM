@@ -10,7 +10,7 @@ using System.Text;
 
 namespace QM.Core
 {
-    public partial class CommandExecutor<TAppContext, TInputModel>
+    public partial class ConsumerPersistExecutor<TAppContext, TInputModel>
         where TInputModel : IRegistrationModel
     {
        

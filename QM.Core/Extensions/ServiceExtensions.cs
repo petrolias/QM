@@ -1,8 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using QM.Core.Abstractions;
 using QM.DAL;
 using QM.DAL.Abstractions;
+using QM.Models.Abstractions;
+using QM.Models.InputModels;
 using Serilog;
 
 namespace QM.Core.Extensions
@@ -17,7 +20,25 @@ namespace QM.Core.Extensions
                .AddDbContext<QMDBContext>(options => options.UseInMemoryDatabase(databaseName: InMemoryDataBaseName))
                .AddScoped<IRepository, Repository>();
             return serviceCollection;
-        }       
+        }
+
+        public static IRepository GetRepository(this IServiceProvider serviceProvider)
+        {
+            return serviceProvider.GetService<IRepository>() ?? throw new NullReferenceException();
+        }
+
+
+        public static IServiceCollection AddConsumerPersistExecutor<TAppContext, TInputModel>(this IServiceCollection serviceCollection) where TInputModel : IRegistrationModel
+        {
+            serviceCollection
+               .AddTransient<IConsumerPersistExecutor<TAppContext, TInputModel>, ConsumerPersistExecutor<TAppContext, TInputModel>>();
+            return serviceCollection;
+        }
+
+        public static IConsumerPersistExecutor<TAppContext, TInputModel> GetConsumerPersistExecutor<TAppContext, TInputModel>(this IServiceProvider serviceProvider) where TInputModel : IRegistrationModel
+        {
+            return serviceProvider.GetService<IConsumerPersistExecutor<TAppContext, TInputModel>>() ?? throw new NullReferenceException();
+        }
 
         public static IServiceCollection AddLoggerService(this IServiceCollection serviceCollection)
         {
@@ -35,11 +56,7 @@ namespace QM.Core.Extensions
             return serviceCollection;
         }
 
-        public static IRepository GetRepository(this IServiceProvider serviceProvider)
-        {
-            return serviceProvider.GetService<IRepository>() ?? throw new NullReferenceException();
-        }
-
+       
         public static ILogger<T> GetLogger<T>(this IServiceProvider serviceProvider)
         {
             return serviceProvider.GetService<ILogger<T>>() ?? throw new NullReferenceException();
