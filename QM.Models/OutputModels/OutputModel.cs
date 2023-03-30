@@ -11,17 +11,17 @@ namespace QM.Models.OutputModels
 
         public TimeSpan TotalPesistTime { get; }
 
-        public List<PersistSystemType> PersistSystemTypes = new();
+        public List<PersistStrategyType> PersistStrategyTypes = new();
 
         public OutputModel(TModel model,             
             DateTime persistedDateTimeAt, 
             DateTime persistedDateTimeEnd, 
-            List<PersistSystemType> persistSystemTypes)
+            List<PersistStrategyType> persistStrategyTypes)
         {
             this.Model = model;
             this.PersistedDateTimeAt = persistedDateTimeAt;
             this.PersistedDateTimeEnd = persistedDateTimeEnd;
-            this.PersistSystemTypes = persistSystemTypes;
+            this.PersistStrategyTypes = persistStrategyTypes;
             this.TotalPesistTime = this.GetTotalPesistTime();
         }      
 

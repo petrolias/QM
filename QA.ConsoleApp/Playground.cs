@@ -30,7 +30,8 @@ namespace QA.ConsoleApp
             var registrationModel = new RegistrationModel() { UserId = 1, UserName = "TestUsername" };
             var executor = new CommandExecutor<TAppContext, RegistrationModel>(
                 this._logger, 
-                ExecutionStrategy.DefaultPersistSystemTypesStragegy, 
+                this._repository,
+                ExecutionStrategy.DefaultPersistStrategyTypesStragegy, 
                 registrationModel);
 
             await executor.ExecuteCommandsAsync();

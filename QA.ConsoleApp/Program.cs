@@ -5,7 +5,7 @@
         private static Playground<Program> _playground = new();
         static async Task Main(string[] args)
         {
-            await _playground.TestTaskAsync();            
+            await this._playground.TestTaskAsync();            
         }
       
     }

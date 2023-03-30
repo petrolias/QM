@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using QM.Core.Abstractions.Enums;
 
 namespace QM.Core.Helper
 {
@@ -25,5 +26,12 @@ namespace QM.Core.Helper
             value = Environment.GetEnvironmentVariable(key);
             return value;
         }
+
+        public string GetParameter(ParameterType parameterType)
+        {
+            return this.GetParameter(parameterType.ToString());
+        }
+
+
     }
 }

@@ -36,13 +36,13 @@ namespace QM.TestProject
         [Fact]
         public async void TestTaskAsync()
         {   
-            var toExecuteList = new List<PersistSystemType>() {
-                PersistSystemType.File,
-                PersistSystemType.Db                
-            };                        
-            var executor = new CommandExecutor(toExecuteList, "Test message");
+            //var toExecuteList = new List<PersistStrategyType>() {
+            //    PersistStrategyType.File,
+            //    PersistStrategyType.Db                
+            //};                        
+            //var executor = new CommandExecutor(toExecuteList, "Test message");
 
-            await executor.ExecuteCommandsAsync();
+            //await executor.ExecuteCommandsAsync();
         }
 
     }

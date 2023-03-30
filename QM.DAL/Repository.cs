@@ -22,6 +22,7 @@ namespace QM.DAL
             catch (Exception ex)
             {
                 Console.WriteLine($"Unexpected error persisting registration: {ex.Message}");
+                throw ex;
             }
 
         }

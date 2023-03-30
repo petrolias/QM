@@ -6,7 +6,7 @@ using QM.Core.IO;
 
 namespace QM.Core.Helper
 {
-    public class FileIO : IStorage, IFileIO
+    public class FileIO : IFileIO
     {
         private readonly string _basePath;
 
@@ -15,7 +15,7 @@ namespace QM.Core.Helper
             _basePath = basePath ?? Directory.GetCurrentDirectory();
         }
 
-        public async Task SaveAsync<TRegistrationModel>(TRegistrationModel registrationModel)
+        public async Task AppendToFileAsync<TRegistrationModel>(TRegistrationModel registrationModel)
                 where TRegistrationModel : IRegistrationModel
         {
             var fileName = GetFileName(registrationModel.CreatedAt);
