@@ -29,7 +29,7 @@ namespace QM.Core
             }
             public bool GetIsRetryAllowed()
             {
-                return this.RetryCount <= _maxRetries;
+                return this.RetryCount < _maxRetries ;
             }
 
         }

@@ -31,7 +31,7 @@ namespace QM.Core
                     }
                     item.RetryCount++;
                     var result = await DoAsyncTask(item);
-                    if (!result)
+                    if (result)
                     {
                         this._executedPostPoolList.Remove(item);
                     }
