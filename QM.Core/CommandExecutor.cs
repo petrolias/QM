@@ -10,7 +10,7 @@ using System.Text;
 
 namespace QM.Core
 {
-    public class CommandExecutor<TAppContext, TInputModel>
+    public partial class CommandExecutor<TAppContext, TInputModel>
         where TInputModel : IRegistrationModel
     {
 
@@ -29,10 +29,7 @@ namespace QM.Core
             return this.executedList.Where(x => x.Item2 == true).Select(x => x.Item1).ToList();
         }
 
-        private bool HasUnexecutedItem()
-        {
-            return this.executedList.Any(x => x.Item2 == false);
-        }
+        
 
         public CommandExecutor(
             ILogger<TAppContext> logger,
@@ -81,23 +78,7 @@ namespace QM.Core
                 this._logger.LogError($"{_guid} Failed to execute {persistStrategyType}: {e.Message}");
                 executedList.Add((persistStrategyType, false));
             }
-        }
-
-        /// <summary>
-        /// executes the retry strategy if enabled and has unexecuted items
-        /// </summary>
-        private async Task ExecuteRetryStrategy()
-        {
-            //Add retry logic here if needed
-            if (IsRetryStrategyEnabled &&
-                this.HasUnexecutedItem())
-            {
-                var executor = new CommandExecutor<TAppContext, TInputModel>(
-                    this._logger, this._repository,
-                    toExecuteList, this._inputModel);
-                await executor.ExecuteCommandsAsync();
-            }
-        }
+        }      
 
         //selects and executes the appropriate strategy to be used based on perists system type
         private async Task ExecutePersistStrategy(PersistStrategyType persistStrategyType, TInputModel inputModel)
@@ -116,52 +97,6 @@ namespace QM.Core
             }
 
         }
-
-      
-        private async Task ExecutePostNotifications(
-            TInputModel inputModel, 
-            DateTime  perstistedDateTimeAt, 
-            DateTime persistedDateTimeEnd,
-            List<PersistStrategyType> persistStrategyTypes
-            ) {
-
-            var outputModel = new OutputModel<TInputModel>(
-                model: inputModel,
-                persistedDateTimeAt: perstistedDateTimeAt,
-                persistedDateTimeEnd: persistedDateTimeEnd,
-                persistStrategyTypes: persistStrategyTypes
-                );
-
-            var content = new StringContent(JsonConvert.SerializeObject(outputModel), Encoding.UTF8, "application/json");
-            
-            var tasks = new List<Task<string>>();
-            foreach (var parameterType in new [] { 
-                ParameterType.urlA, 
-                ParameterType.urlB})
-            {
-                tasks.Add(this.ExecutePostAsync(parameterType, content));                
-            }
-            var responses = await Task.WhenAll(tasks);
-            foreach (var response in responses)
-            {
-                this._logger.LogInformation($"{_guid} Executed post notification response : {response}");
-            }
-        }
-
-        private async Task<string> ExecutePostAsync(ParameterType parameterType, HttpContent httpContent)
-        {
-            try
-            {
-                var httpResponse = await HttpHelper.PostAsync(this.parameterHelper.GetParameter(parameterType), httpContent);
-                return httpResponse;
-            }
-            catch (Exception e)
-            {
-                // Record the failure
-                var message = $"{_guid} Failed to execute post Async {parameterType} {httpContent}: {e.Message}";
-                this._logger.LogError(message);
-                return message;
-            }
-        }
+                 
     }
 }
