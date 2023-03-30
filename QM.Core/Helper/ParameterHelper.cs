@@ -33,5 +33,17 @@ namespace QM.Core.Helper
         }
 
 
+        public int GetParameterInt(ParameterType parameterType, int defaultValue = default)
+        {
+            int result;
+            string param = this.GetParameter(parameterType.ToString());
+            if (int.TryParse(param, out result))
+            {
+                return result;
+            }            
+            Console.Error.WriteLine($"Parameters Input string {param} is not a valid integer.");
+            return defaultValue;            
+        }
+
     }
 }

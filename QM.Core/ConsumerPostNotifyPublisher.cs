@@ -12,7 +12,29 @@ namespace QM.Core
 {
     public partial class ConsumerPostNotifyPublisher<TAppContext, TInputModel> : IConsumerPostNotifyPublisher<TAppContext, TInputModel> where TInputModel : IRegistrationModel
     {
-        private List<(ParameterType, bool)> _executedPostPoolList;
+        public class ExecutedPostPoolItem
+        {
+            public string Url { get; set; }
+            public HttpContent HttpContent { get; set; }
+            public Guid Guid { get; set; }
+            public bool IsSuccess = false;
+            public int RetryCount = 0;
+
+            private const int MaxRetries = 3;
+            private int _maxRetries;
+
+            public ExecutedPostPoolItem(int maxRetries = MaxRetries)
+            {
+                this._maxRetries = maxRetries;
+            }
+            public bool GetIsRetryAllowed()
+            {
+                return this.RetryCount <= _maxRetries;
+            }
+
+        }
+
+        private List<ExecutedPostPoolItem> _executedPostPoolList;
         private readonly ILogger<TAppContext> _logger;
         private readonly ParameterHelper _parameterHelper = new();
 
@@ -21,8 +43,9 @@ namespace QM.Core
            )
         {
             this._logger = logger;
-            this._executedPostPoolList = new List<(ParameterType, bool)>();
+            this._executedPostPoolList = new List<ExecutedPostPoolItem>();
         }
+
 
         public async Task ExecutePostNotifications(
             TInputModel inputModel,
@@ -53,25 +76,29 @@ namespace QM.Core
             {
                 this._logger.LogInformation($"{inputModel.Guid} Executed post notification response : {response}");
             }
+
+            await this.ExecuteRetryStrategy();
         }
 
         private async Task<string> ExecutePostAsync(ParameterType parameterType, HttpContent httpContent, Guid guid)
         {
+            var url = this._parameterHelper.GetParameter(parameterType);
+            var httpPostMaxRetries = this._parameterHelper.GetParameterInt(ParameterType.HttpPostMaxRetries);
             try
-            {
-                var httpResponse = await HttpHelper.PostAsync(this._parameterHelper.GetParameter(parameterType), httpContent);
-                _executedPostPoolList.Add((parameterType, true));
+            {                
+                var httpResponse = await HttpHelper.PostAsync(url, httpContent);
+                _executedPostPoolList.Add(new ExecutedPostPoolItem(maxRetries: httpPostMaxRetries) { IsSuccess = true, Guid = guid,  Url = url, HttpContent = httpContent });
                 return httpResponse;
             }
-            catch (Exception e)
-            {
-                // Record the failure
-                var message = $"{guid} Failed to execute post Async {parameterType} {httpContent}: {e.Message}";
-                _executedPostPoolList.Add((parameterType, false));
+            catch (Exception ex)
+            {                
+                _executedPostPoolList.Add(new ExecutedPostPoolItem(maxRetries: httpPostMaxRetries) { IsSuccess = false, Guid = guid, Url = url, HttpContent = httpContent });
+                var message = $"{guid} Failed to execute post Async {url} {httpContent}: {ex.Message}";
                 this._logger.LogError(message);
                 return message;
             }
         }
+              
 
     }
 }

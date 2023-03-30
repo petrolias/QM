@@ -3,6 +3,7 @@
     public enum ParameterType
     {
         urlA,
-        urlB
+        urlB, 
+        HttpPostMaxRetries
     }
 }
