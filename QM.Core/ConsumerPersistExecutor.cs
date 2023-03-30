@@ -2,10 +2,10 @@
 using QM.Core.Abstractions;
 using QM.Core.Abstractions.Enums;
 using QM.Core.Helper;
-using QM.DAL.Abstractions;
-using QM.DAL.Mapper;
+using QM.Mapper.Abstractions;
+using QM.Mapper;
 using QM.Models.Abstractions;
-
+using QM.Models.Validations.Extensions;
 namespace QM.Core
 {
     public partial class ConsumerPersistExecutor<TAppContext, TInputModel> : IConsumerPersistExecutor<TAppContext, TInputModel> where TInputModel : IRegistrationModel
@@ -43,6 +43,9 @@ namespace QM.Core
 
             this._toExecuteList = toExecuteList;
             this._inputModel = inputModel;
+            if (!_inputModel.GetValidation().IsSuccess) {
+                Task.FromException(_inputModel.GetValidation().Exception);                
+            }
             
             this._logger.LogInformation($"{this.GetGuid()} Executing Commands Async at {executeCommandsStart}");
 
@@ -59,10 +62,7 @@ namespace QM.Core
                 executeCommandsStart,
                 executeCommandsEnd, 
                 this.GetExecutedPersistStrategyTypes());
-            this._logger.LogInformation($"{this.GetGuid()} Executing Commands Completed at {executeCommandsEnd}");
-
-            //Add retry logic here if enabled
-            //await this.ExecuteRetryStrategy();
+            this._logger.LogInformation($"{this.GetGuid()} Executing Commands Completed at {executeCommandsEnd}");                     
         }
 
         private async Task ExecutePeristStrategyWrapperAsync(PersistStrategyType persistStrategyType)

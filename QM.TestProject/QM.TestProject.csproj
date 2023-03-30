@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\QM.Core\QM.Core.csproj" />
     <ProjectReference Include="..\QM.DAL\QM.DAL.csproj" />
+    <ProjectReference Include="..\QM.Mapper\QM.Mapper.csproj" />
     <ProjectReference Include="..\QM.Models\QM.Models.csproj" />
   </ItemGroup>
 

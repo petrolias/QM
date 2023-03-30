@@ -11,7 +11,8 @@ namespace QM.Core
     public partial class ConsumerPersistExecutor<TAppContext, TInputModel>
         where TInputModel : IRegistrationModel
     {
-       
+        private List<(ParameterType, bool)> _executedPostPoolList;
+
         private async Task ExecutePostNotifications(
             TInputModel inputModel,             
             DateTime  perstistedDateTimeAt, 
@@ -47,12 +48,14 @@ namespace QM.Core
             try
             {
                 var httpResponse = await HttpHelper.PostAsync(this.parameterHelper.GetParameter(parameterType), httpContent);
+                _executedPostPoolList.Add((parameterType, true));
                 return httpResponse;
             }
             catch (Exception e)
             {
                 // Record the failure
                 var message = $"{this.GetGuid()} Failed to execute post Async {parameterType} {httpContent}: {e.Message}";
+                _executedPostPoolList.Add((parameterType, false));
                 this._logger.LogError(message);
                 return message;
             }

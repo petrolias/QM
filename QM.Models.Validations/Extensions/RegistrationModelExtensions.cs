@@ -4,7 +4,11 @@ namespace QM.Models.Validations.Extensions
 {
     public static class RegistrationModelExtensions
     {
-        public static bool IsValid(this IRegistrationModel registrationModel)
+        public class ValidationResponse { 
+            public bool IsSuccess { get; set; }
+            public Exception Exception { get; set; }
+        }
+        public static ValidationResponse GetValidation(this IRegistrationModel registrationModel)
         {
             try
             {
@@ -16,9 +20,9 @@ namespace QM.Models.Validations.Extensions
             {
                 //var message = ex.Message;
                 //log exception or what ever
-                return false;
+                return new ValidationResponse() { IsSuccess = false, Exception = ex };
             }
-            return true;
+            return new ValidationResponse() { IsSuccess = true };
         }
 
         private static IRegistrationModel ValidateUsername(this IRegistrationModel registrationModel)

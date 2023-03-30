@@ -1,7 +1,7 @@
-﻿using QM.DAL.Abstractions;
+﻿using QM.Mapper.Abstractions;
 using QM.Models.Abstractions;
 
-namespace QM.DAL
+namespace QM.Mapper
 {
     public class Repository : IRepository
     {

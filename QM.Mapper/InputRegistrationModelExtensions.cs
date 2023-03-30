@@ -2,7 +2,7 @@
 using QM.Models.Abstractions;
 using QM.Models.DomainModels;
 
-namespace QM.DAL.Mapper
+namespace QM.Mapper
 {
     public static class InputRegistrationModelExtensions
     {

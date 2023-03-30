@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using QM.DAL.Abstractions;
+using QM.Mapper.Abstractions;
 using QM.Core.Extensions;
 using Microsoft.Extensions.Logging;
 using QM.Models.DomainModels;
 using QM.Core.Abstractions;
 using QA.External.Models;
-using QM.DAL.Mapper;
+using QM.Mapper;
 
 namespace QA.ConsoleApp
 {
@@ -25,15 +25,22 @@ namespace QA.ConsoleApp
                 .AddConsumerPersistExecutor<TAppContext, RegistrationModel>()
                 .BuildServiceProvider();
         }
-        public async Task ExecuteTaskAsync()
+        public async Task<bool> ExecuteTaskAsync(InputRegistrationModel inputRegistrationModel)
         {            
             this._logger.LogInformation("Executing Test task async");
+            try
+            {               
+                var registrationModel = inputRegistrationModel.GetDomainModel();
+                await this._consumerPersistExecutor.ConsumeAndPersistAsync(
+                    ExecutionStrategy.DefaultPersistStrategyTypesStrategies,
+                    registrationModel);
+            }
+            catch (Exception ex) {
+                this._logger.LogInformation($"Executing Test task async failed {ex.Message}");
+                return false;
 
-            var inputRegistrationModel = new InputRegistrationModel() { UserId = 1, UserName = "TestUsername" };
-            var registrationModel = inputRegistrationModel.GetDomainModel();            
-            await this._consumerPersistExecutor.ConsumeAndPersistAsync(
-                ExecutionStrategy.DefaultPersistStrategyTypesStrategies,
-                registrationModel);
+            }
+            return true;        
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using QM.Models.Abstractions;
 
-namespace QM.DAL.Abstractions
+namespace QM.Mapper.Abstractions
 {
     public interface IRepository
     {

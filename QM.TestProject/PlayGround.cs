@@ -1,7 +1,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
-using QM.DAL.Abstractions;
-using QM.DAL.Models;
+using QM.Mapper.Abstractions;
+using QM.Mapper.Models;
 using QM.Core.Abstractions.Enums;
 using QM.Core.Extensions;
 using Microsoft.Extensions.Logging;

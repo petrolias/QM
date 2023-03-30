@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace QM.DAL.Models
+namespace QM.Mapper.Models
 {
     [Table("Registrations")]
     public class RegistrationModelDB : IRegistrationModel

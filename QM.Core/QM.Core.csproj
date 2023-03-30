@@ -25,9 +25,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QM.Core.Abstractions\QM.Core.Abstractions.csproj" />
-    <ProjectReference Include="..\QM.DAL.Mapper\QM.DAL.Mapper.csproj" />
     <ProjectReference Include="..\QM.DAL\QM.DAL.csproj" />
+    <ProjectReference Include="..\QM.Mapper\QM.Mapper.csproj" />
     <ProjectReference Include="..\QM.Models.Abstractions\QM.Models.Abstractions.csproj" />
+    <ProjectReference Include="..\QM.Models.Validations\QM.Models.Validations.csproj" />
     <ProjectReference Include="..\QM.Models\QM.Models.csproj" />
     <ProjectReference Include="..\QM.QueueMessage\QM.QueueMessage.csproj" />
   </ItemGroup>

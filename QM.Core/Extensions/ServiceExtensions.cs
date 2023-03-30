@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using QM.Core.Abstractions;
-using QM.DAL;
-using QM.DAL.Abstractions;
+using QM.Mapper;
+using QM.Mapper.Abstractions;
 using QM.Models.Abstractions;
 using QM.Models.DomainModels;
 using Serilog;

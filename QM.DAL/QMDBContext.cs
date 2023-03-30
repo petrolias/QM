@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using QM.DAL.Models;
+using QM.Mapper.Models;
 
-namespace QM.DAL
+namespace QM.Mapper
 {
     public class QMDBContext : DbContext
     {
