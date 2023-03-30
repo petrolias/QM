@@ -4,17 +4,10 @@ using Microsoft.Extensions.Logging;
 using QM.DAL;
 using QM.DAL.Abstractions;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Serilog.Context;
-using Serilog.Extensions.Logging;
 
 namespace QM.Core.Extensions
 {
-    public static class ServiceExtentions
+    public static class ServiceExtensions
     {
         private const string InMemoryDataBaseName = "InMemoryDatabase";
 

@@ -23,7 +23,7 @@ namespace QA.ConsoleApp
                 .AddLoggerService()
                 .BuildServiceProvider();
         }
-        public async Task TestTaskAsync()
+        public async Task ExecuteTaskAsync()
         {            
             this._logger.LogInformation("Executing Test task async");
  
