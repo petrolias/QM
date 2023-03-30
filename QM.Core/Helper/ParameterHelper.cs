@@ -6,12 +6,12 @@ namespace QM.Core.Helper
     public class ParameterHelper
     {
         private readonly IConfiguration _config;
-        private const string ConfigurationFile = "appsettings.json";
-        public ParameterHelper()
-        {
+        private const string ConfigurationFile = "appsettings.json";        
+        public ParameterHelper(string configurationFile = ConfigurationFile)
+        {            
             _config = new ConfigurationBuilder()                                
                 .AddEnvironmentVariables()
-                .AddJsonFile(ConfigurationFile, optional: true)
+                .AddJsonFile(configurationFile, optional: true)
                 .Build();
         }
 

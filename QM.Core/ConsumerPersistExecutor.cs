@@ -1,14 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using QM.Core.Abstractions;
 using QM.Core.Abstractions.Enums;
-using QM.Core.Common;
 using QM.Core.Helper;
 using QM.DAL.Abstractions;
 using QM.DAL.Mapper;
 using QM.Models.Abstractions;
-using QM.Models.OutputModels;
-using System.Text;
 
 namespace QM.Core
 {
