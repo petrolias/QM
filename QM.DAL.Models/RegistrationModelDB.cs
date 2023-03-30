@@ -16,5 +16,7 @@ namespace QM.DAL.Models
         public string UserName { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
+        [Required]
+        public Guid Guid { get; set; }        
     }
 }

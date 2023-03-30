@@ -2,8 +2,10 @@
 using QM.DAL.Abstractions;
 using QM.Core.Extensions;
 using Microsoft.Extensions.Logging;
-using QM.Models.InputModels;
+using QM.Models.DomainModels;
 using QM.Core.Abstractions;
+using QA.External.Models;
+using QM.DAL.Mapper;
 
 namespace QA.ConsoleApp
 {
@@ -27,9 +29,10 @@ namespace QA.ConsoleApp
         {            
             this._logger.LogInformation("Executing Test task async");
 
-            var registrationModel = new RegistrationModel() { UserId = 1, UserName = "TestUsername" };
+            var inputRegistrationModel = new InputRegistrationModel() { UserId = 1, UserName = "TestUsername" };
+            var registrationModel = inputRegistrationModel.GetDomainModel();            
             await this._consumerPersistExecutor.ConsumeAndPersistAsync(
-                ExecutionStrategy.DefaultPersistStrategyTypesStragegies,
+                ExecutionStrategy.DefaultPersistStrategyTypesStrategies,
                 registrationModel);
         }
     }

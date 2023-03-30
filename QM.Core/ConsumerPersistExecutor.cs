@@ -9,14 +9,14 @@ using QM.Models.Abstractions;
 namespace QM.Core
 {
     public partial class ConsumerPersistExecutor<TAppContext, TInputModel> : IConsumerPersistExecutor<TAppContext, TInputModel> where TInputModel : IRegistrationModel
-    {        
+    {
         private List<PersistStrategyType> _toExecuteList;
         private List<(PersistStrategyType, bool)> _executedPersistStrategyPoolList;
         private TInputModel _inputModel;
         private readonly ILogger<TAppContext> _logger;
         private readonly IRepository _repository;
         private readonly ParameterHelper parameterHelper = new();
-        public static Guid _guid = Guid.NewGuid();
+        private Guid GetGuid(){ return this._inputModel.Guid; }
 
         //Returns executed persist system types
         private List<PersistStrategyType> GetExecutedPersistStrategyTypes()
@@ -39,10 +39,12 @@ namespace QM.Core
             List<PersistStrategyType> toExecuteList,
             TInputModel inputModel)
         {
+            var executeCommandsStart = DateTime.UtcNow;
+
             this._toExecuteList = toExecuteList;
             this._inputModel = inputModel;
-            var executeCommandsStart = DateTime.UtcNow;
-            this._logger.LogInformation($"{_guid} Executing Commands Async at {executeCommandsStart}");
+            
+            this._logger.LogInformation($"{this.GetGuid()} Executing Commands Async at {executeCommandsStart}");
 
             //execute the tasks
             var tasks = new List<Task>();
@@ -53,8 +55,11 @@ namespace QM.Core
             await Task.WhenAll(tasks);
             var executeCommandsEnd = DateTime.UtcNow;
             //get only successfull calls
-            await ExecutePostNotifications(this._inputModel, executeCommandsStart, executeCommandsEnd, this.GetExecutedPersistStrategyTypes());
-            this._logger.LogInformation($"{_guid} Executing Commands Completed at {executeCommandsEnd}");
+            await ExecutePostNotifications(this._inputModel, 
+                executeCommandsStart,
+                executeCommandsEnd, 
+                this.GetExecutedPersistStrategyTypes());
+            this._logger.LogInformation($"{this.GetGuid()} Executing Commands Completed at {executeCommandsEnd}");
 
             //Add retry logic here if enabled
             //await this.ExecuteRetryStrategy();
@@ -70,7 +75,7 @@ namespace QM.Core
             catch (Exception e)
             {
                 // Record the failure time and log the exception message
-                this._logger.LogError($"{_guid} Failed to execute {persistStrategyType}: {e.Message}");
+                this._logger.LogError($"{this.GetGuid()} Failed to execute {persistStrategyType}: {e.Message}");
                 _executedPersistStrategyPoolList.Add((persistStrategyType, false));
             }
         }
@@ -78,7 +83,7 @@ namespace QM.Core
         //selects and executes the appropriate strategy to be used based on perists system type
         private async Task ExecutePersistStrategySelector(PersistStrategyType persistStrategyType, IRegistrationModel inputModel)
         {
-            this._logger.LogInformation($"Executing {persistStrategyType}...");
+            this._logger.LogInformation($"{this.GetGuid()} Executing {persistStrategyType}...");
             switch (persistStrategyType)
             {
                 case PersistStrategyType.File:

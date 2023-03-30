@@ -7,7 +7,7 @@ namespace QM.Core.Abstractions
     /// </summary>
     public static class ExecutionStrategy
     {
-        public static List<PersistStrategyType> DefaultPersistStrategyTypesStragegies = new() {
+        public static List<PersistStrategyType> DefaultPersistStrategyTypesStrategies = new() {
                 PersistStrategyType.File,
                 PersistStrategyType.Db
             };

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\QA.External.Models\QA.External.Models.csproj" />
     <ProjectReference Include="..\QM.DAL.Models\QM.DAL.Models.csproj" />
     <ProjectReference Include="..\QM.Models\QM.Models.csproj" />
   </ItemGroup>

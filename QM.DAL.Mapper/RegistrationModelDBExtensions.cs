@@ -1,6 +1,6 @@
 ﻿using QM.DAL.Models;
 using QM.Models.Abstractions;
-using QM.Models.InputModels;
+using QM.Models.DomainModels;
 
 namespace QM.DAL.Mapper
 {

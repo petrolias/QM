@@ -5,7 +5,7 @@ namespace QM.Models.OutputModels
     public class OutputModel<TModel>
     {
         public TModel Model { get; set; }        
-
+        
         public DateTime PersistedDateTimeAt { get; }
         public DateTime PersistedDateTimeEnd { get; }
 
@@ -13,12 +13,12 @@ namespace QM.Models.OutputModels
 
         public List<PersistStrategyType> PersistStrategyTypes = new();
 
-        public OutputModel(TModel model,             
+        public OutputModel(TModel model,              
             DateTime persistedDateTimeAt, 
             DateTime persistedDateTimeEnd, 
             List<PersistStrategyType> persistStrategyTypes)
         {
-            this.Model = model;
+            this.Model = model;            
             this.PersistedDateTimeAt = persistedDateTimeAt;
             this.PersistedDateTimeEnd = persistedDateTimeEnd;
             this.PersistStrategyTypes = persistStrategyTypes;

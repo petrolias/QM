@@ -2,8 +2,6 @@
 using Newtonsoft.Json;
 using QM.Core.Abstractions.Enums;
 using QM.Core.Common;
-using QM.Core.Helper;
-using QM.DAL.Abstractions;
 using QM.Models.Abstractions;
 using QM.Models.OutputModels;
 using System.Text;
@@ -15,14 +13,14 @@ namespace QM.Core
     {
        
         private async Task ExecutePostNotifications(
-            TInputModel inputModel, 
+            TInputModel inputModel,             
             DateTime  perstistedDateTimeAt, 
             DateTime persistedDateTimeEnd,
             List<PersistStrategyType> persistStrategyTypes
             ) {
 
             var outputModel = new OutputModel<TInputModel>(
-                model: inputModel,
+                model: inputModel,                
                 persistedDateTimeAt: perstistedDateTimeAt,
                 persistedDateTimeEnd: persistedDateTimeEnd,
                 persistStrategyTypes: persistStrategyTypes
@@ -40,7 +38,7 @@ namespace QM.Core
             var responses = await Task.WhenAll(tasks);
             foreach (var response in responses)
             {
-                this._logger.LogInformation($"{_guid} Executed post notification response : {response}");
+                this._logger.LogInformation($"{this.GetGuid()} Executed post notification response : {response}");
             }
         }
 
@@ -54,7 +52,7 @@ namespace QM.Core
             catch (Exception e)
             {
                 // Record the failure
-                var message = $"{_guid} Failed to execute post Async {parameterType} {httpContent}: {e.Message}";
+                var message = $"{this.GetGuid()} Failed to execute post Async {parameterType} {httpContent}: {e.Message}";
                 this._logger.LogError(message);
                 return message;
             }

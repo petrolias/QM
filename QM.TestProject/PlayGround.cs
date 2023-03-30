@@ -7,7 +7,7 @@ using QM.Core.Extensions;
 using Microsoft.Extensions.Logging;
 using QM.Core;
 using QM.Core.Abstractions;
-using QM.Models.InputModels;
+using QM.Models.DomainModels;
 using QM.Core.Helper;
 
 namespace QM.TestProject

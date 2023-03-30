@@ -5,7 +5,7 @@ using QM.Core.Abstractions;
 using QM.DAL;
 using QM.DAL.Abstractions;
 using QM.Models.Abstractions;
-using QM.Models.InputModels;
+using QM.Models.DomainModels;
 using Serilog;
 
 namespace QM.Core.Extensions

@@ -1,11 +1,6 @@
 ﻿using QM.Models.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace QM.Models.InputModels
+namespace QM.Models.DomainModels
 {
     public class RegistrationModel : BaseRegistrationModel, IRegistrationModel
     {
