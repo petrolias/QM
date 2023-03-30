@@ -1,35 +1,31 @@
 ﻿using AutoMapper;
+using QM.DAL.Models;
+using QM.Models.Abstractions;
 
 namespace QM.DAL.Mapper
 {
-    public static class AutoMapperHelper<TTo>
+    public static class AutoMapperHelper
     {
-        private static IMapper _mapper;
-
-        private static void CreateMapperIfNull()
-        {
-            if (_mapper != null) { return; }
+        public static IMapper _mapper;
+        
+        public static void InitializeAutomapper()
+        {            
             var config = new MapperConfiguration(cfg =>
-            {
-                //ADD any required configurations
+            {                
+                cfg.CreateMap<IRegistrationModel, RegistrationModelDB>();
+                //Any Other Mapping Configuration ....
             });
-            _mapper = config.CreateMapper();
+            //Create an Instance of Mapper and return that Instance
+            var mapper = new AutoMapper.Mapper(config);
+            _mapper = mapper;            
         }
-
-        public static TTo GetMappingResult<TFrom>(TFrom obj)
+        public static IMapper CreateMapperIfNull()
         {
-            CreateMapperIfNull();
-            return _mapper.Map<TFrom, TTo>(obj);
-        }
-
-        public static IEnumerable<TTo> GetMappingResult<TFrom>(IEnumerable<TFrom>? obj)
-        {
-            if (obj == null)
-            {
-                return Array.Empty<TTo>();
+            if (_mapper == null) {
+                InitializeAutomapper();
             }
-            CreateMapperIfNull();
-            return _mapper.Map<IEnumerable<TTo>>(obj).ToList();
-        }
+            return _mapper;
+        }       
+
     }
 }

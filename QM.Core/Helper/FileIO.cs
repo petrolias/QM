@@ -15,13 +15,14 @@ namespace QM.Core.Helper
             _basePath = basePath ?? Directory.GetCurrentDirectory();
         }
 
-        public async Task AppendToFileAsync<TRegistrationModel>(TRegistrationModel registrationModel)
+        public async Task AddFile<TRegistrationModel>(TRegistrationModel registrationModel)
                 where TRegistrationModel : IRegistrationModel
         {
             var fileName = GetFileName(registrationModel.CreatedAt);
             var filePath = Path.Combine(_basePath, fileName);
             var json = JsonConvert.SerializeObject(registrationModel);
-            await File.AppendAllTextAsync(filePath, json + Environment.NewLine);
+            using StreamWriter sw = new(filePath, true);
+            await sw.WriteLineAsync(json);
         }
 
         private string GetFileName(DateTime dateTime)

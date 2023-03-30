@@ -5,6 +5,7 @@ using QM.Core.Abstractions.Enums;
 using QM.Core.Common;
 using QM.Core.Helper;
 using QM.DAL.Abstractions;
+using QM.DAL.Mapper;
 using QM.Models.Abstractions;
 using QM.Models.OutputModels;
 using System.Text;
@@ -66,8 +67,8 @@ namespace QM.Core
         private async Task ExecutePeristStrategyWrapperAsync(PersistStrategyType persistStrategyType)
         {
             try
-            {
-                await ExecutePersistStrategySelector(persistStrategyType, this._inputModel);
+            {                
+                await ExecutePersistStrategySelector(persistStrategyType, this._inputModel.GetDBModel());
                 _executedPersistStrategyPoolList.Add((persistStrategyType, true));
             }
             catch (Exception e)
@@ -79,13 +80,13 @@ namespace QM.Core
         }
 
         //selects and executes the appropriate strategy to be used based on perists system type
-        private async Task ExecutePersistStrategySelector(PersistStrategyType persistStrategyType, TInputModel inputModel)
+        private async Task ExecutePersistStrategySelector(PersistStrategyType persistStrategyType, IRegistrationModel inputModel)
         {
             this._logger.LogInformation($"Executing {persistStrategyType}...");
             switch (persistStrategyType)
             {
                 case PersistStrategyType.File:
-                    await new FileIO().AppendToFileAsync(inputModel);
+                    await new FileIO().AddFile(inputModel);
                     break;
                 case PersistStrategyType.Db:
                     await this._repository.SaveChangesAsync(inputModel);

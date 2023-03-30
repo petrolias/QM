@@ -4,6 +4,6 @@ namespace QM.Core.IO
 {
     public interface IFileIO
     {
-        Task AppendToFileAsync<TRegistrationModel>(TRegistrationModel registrationModel) where TRegistrationModel : IRegistrationModel;
+        Task AddFile<TRegistrationModel>(TRegistrationModel registrationModel) where TRegistrationModel : IRegistrationModel;
     }
 }
