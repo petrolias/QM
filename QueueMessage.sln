@@ -21,11 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.DAL.Models", "QM.DAL.Mod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.DAL.Abstractions", "QM.DAL.Abstractions\QM.DAL.Abstractions.csproj", "{587F0D80-49EB-46C5-849E-06DFF421E452}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.QueueMessage", "QM.QueueMessage\QM.QueueMessage.csproj", "{2846DF86-D52C-4373-8C49-7EA3B5856D6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.ConsoleApp", "QA.ConsoleApp\QM.ConsoleApp.csproj", "{84067465-F730-4D80-A8E6-F3AC251C5E65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QA.ConsoleApp", "QA.ConsoleApp\QA.ConsoleApp.csproj", "{84067465-F730-4D80-A8E6-F3AC251C5E65}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QA.External.Models", "QA.External.Models\QA.External.Models.csproj", "{8360C23C-1321-44A0-90D5-8DF21C2AB644}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QM.External.Models", "QA.External.Models\QM.External.Models.csproj", "{8360C23C-1321-44A0-90D5-8DF21C2AB644}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QM.Mapper", "QM.Mapper\QM.Mapper.csproj", "{0628ACDF-C728-467F-8344-FEAF7A971CEB}"
 EndProject
@@ -71,10 +69,6 @@ Global
 		{587F0D80-49EB-46C5-849E-06DFF421E452}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{587F0D80-49EB-46C5-849E-06DFF421E452}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{587F0D80-49EB-46C5-849E-06DFF421E452}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2846DF86-D52C-4373-8C49-7EA3B5856D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2846DF86-D52C-4373-8C49-7EA3B5856D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2846DF86-D52C-4373-8C49-7EA3B5856D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2846DF86-D52C-4373-8C49-7EA3B5856D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{84067465-F730-4D80-A8E6-F3AC251C5E65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{84067465-F730-4D80-A8E6-F3AC251C5E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84067465-F730-4D80-A8E6-F3AC251C5E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
