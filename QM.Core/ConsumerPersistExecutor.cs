@@ -10,12 +10,13 @@ namespace QM.Core
 {
     public partial class ConsumerPersistExecutor<TAppContext, TInputModel> : IConsumerPersistExecutor<TAppContext, TInputModel> where TInputModel : IRegistrationModel
     {
-        private List<PersistStrategyType> _toExecuteList;
+        private List<PersistStrategyType> _toExecutePersistStrategyTypes;
         private List<(PersistStrategyType, bool)> _executedPersistStrategyPoolList;
         private TInputModel _inputModel;
         private readonly ILogger<TAppContext> _logger;
         private readonly IRepository _repository;
-        private readonly ParameterHelper parameterHelper = new();
+        private readonly IConsumerPostNotifyPublisher<TAppContext, TInputModel> _consumerPostNotifyPublisher;
+        
         private Guid GetGuid(){ return this._inputModel.Guid; }
 
         //Returns executed persist system types
@@ -23,25 +24,32 @@ namespace QM.Core
         {
             return this._executedPersistStrategyPoolList.Where(x => x.Item2 == true).Select(x => x.Item1).ToList();
         }
-
-
+     
         public ConsumerPersistExecutor(
             ILogger<TAppContext> logger,
-            IRepository repository             
+            IRepository repository,  
+            IConsumerPostNotifyPublisher<TAppContext, TInputModel> consumerPostNotifyPublisher
             )
         {
             this._logger = logger;
             this._repository = repository;           
+            this._consumerPostNotifyPublisher = consumerPostNotifyPublisher;
             this._executedPersistStrategyPoolList = new List<(PersistStrategyType, bool)>();            
         }
 
+        /// <summary>
+        /// Execute 
+        /// </summary>
+        /// <param name="toExecuteList"></param>
+        /// <param name="inputModel"></param>
+        /// <returns></returns>
         public async Task ConsumeAndPersistAsync(
-            List<PersistStrategyType> toExecuteList,
+            List<PersistStrategyType> toExecutePersistStrategyTypes,
             TInputModel inputModel)
         {
             var executeCommandsStart = DateTime.UtcNow;
 
-            this._toExecuteList = toExecuteList;
+            this._toExecutePersistStrategyTypes = toExecutePersistStrategyTypes;
             this._inputModel = inputModel;
             if (!_inputModel.GetValidation().IsSuccess) {
                 Task.FromException(_inputModel.GetValidation().Exception);                
@@ -51,14 +59,14 @@ namespace QM.Core
 
             //execute the tasks
             var tasks = new List<Task>();
-            foreach (var command in _toExecuteList)
+            foreach (var command in _toExecutePersistStrategyTypes)
             {
                 tasks.Add(this.ExecutePeristStrategyWrapperAsync(command));
             }
             await Task.WhenAll(tasks);
             var executeCommandsEnd = DateTime.UtcNow;
             //get only successfull calls
-            await ExecutePostNotifications(this._inputModel, 
+            await this._consumerPostNotifyPublisher.ExecutePostNotifications(this._inputModel, 
                 executeCommandsStart,
                 executeCommandsEnd, 
                 this.GetExecutedPersistStrategyTypes());

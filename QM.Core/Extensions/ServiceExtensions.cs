@@ -40,6 +40,20 @@ namespace QM.Core.Extensions
             return serviceProvider.GetService<IConsumerPersistExecutor<TAppContext, TInputModel>>() ?? throw new NullReferenceException();
         }
 
+
+        public static IServiceCollection AddConsumerPostNotifyPublisher<TAppContext, TInputModel>(this IServiceCollection serviceCollection) where TInputModel : IRegistrationModel
+        {
+            serviceCollection
+               .AddTransient<IConsumerPostNotifyPublisher<TAppContext, TInputModel>, ConsumerPostNotifyPublisher<TAppContext, TInputModel>>();
+            return serviceCollection;
+        }
+
+
+        public static IConsumerPostNotifyPublisher<TAppContext, TInputModel> GetConsumerPostNotifyPublisher<TAppContext, TInputModel>(this IServiceProvider serviceProvider) where TInputModel : IRegistrationModel
+        {
+            return serviceProvider.GetService<IConsumerPostNotifyPublisher<TAppContext, TInputModel>>() ?? throw new NullReferenceException();
+        }
+
         public static IServiceCollection AddLoggerService(this IServiceCollection serviceCollection)
         {
             Log.Logger = new LoggerConfiguration()

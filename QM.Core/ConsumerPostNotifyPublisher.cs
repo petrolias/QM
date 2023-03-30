@@ -1,65 +1,77 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using QM.Core.Abstractions;
 using QM.Core.Abstractions.Enums;
 using QM.Core.Common;
+using QM.Core.Helper;
 using QM.Models.Abstractions;
 using QM.Models.OutputModels;
 using System.Text;
 
 namespace QM.Core
 {
-    public partial class ConsumerPersistExecutor<TAppContext, TInputModel>
-        where TInputModel : IRegistrationModel
+    public partial class ConsumerPostNotifyPublisher<TAppContext, TInputModel> : IConsumerPostNotifyPublisher<TAppContext, TInputModel> where TInputModel : IRegistrationModel
     {
         private List<(ParameterType, bool)> _executedPostPoolList;
+        private readonly ILogger<TAppContext> _logger;
+        private readonly ParameterHelper _parameterHelper = new();
 
-        private async Task ExecutePostNotifications(
-            TInputModel inputModel,             
-            DateTime  perstistedDateTimeAt, 
+        public ConsumerPostNotifyPublisher(
+           ILogger<TAppContext> logger
+           )
+        {
+            this._logger = logger;
+            this._executedPostPoolList = new List<(ParameterType, bool)>();
+        }
+
+        public async Task ExecutePostNotifications(
+            TInputModel inputModel,
+            DateTime perstistedDateTimeAt,
             DateTime persistedDateTimeEnd,
             List<PersistStrategyType> persistStrategyTypes
-            ) {
+            )
+        {
 
             var outputModel = new OutputModel<TInputModel>(
-                model: inputModel,                
+                model: inputModel,
                 persistedDateTimeAt: perstistedDateTimeAt,
                 persistedDateTimeEnd: persistedDateTimeEnd,
                 persistStrategyTypes: persistStrategyTypes
                 );
 
             var content = new StringContent(JsonConvert.SerializeObject(outputModel), Encoding.UTF8, "application/json");
-            
+
             var tasks = new List<Task<string>>();
-            foreach (var parameterType in new [] { 
-                ParameterType.urlA, 
+            foreach (var parameterType in new[] {
+                ParameterType.urlA,
                 ParameterType.urlB})
             {
-                tasks.Add(this.ExecutePostAsync(parameterType, content));                
+                tasks.Add(this.ExecutePostAsync(parameterType, content, inputModel.Guid));
             }
             var responses = await Task.WhenAll(tasks);
             foreach (var response in responses)
             {
-                this._logger.LogInformation($"{this.GetGuid()} Executed post notification response : {response}");
+                this._logger.LogInformation($"{inputModel.Guid} Executed post notification response : {response}");
             }
         }
 
-        private async Task<string> ExecutePostAsync(ParameterType parameterType, HttpContent httpContent)
+        private async Task<string> ExecutePostAsync(ParameterType parameterType, HttpContent httpContent, Guid guid)
         {
             try
             {
-                var httpResponse = await HttpHelper.PostAsync(this.parameterHelper.GetParameter(parameterType), httpContent);
+                var httpResponse = await HttpHelper.PostAsync(this._parameterHelper.GetParameter(parameterType), httpContent);
                 _executedPostPoolList.Add((parameterType, true));
                 return httpResponse;
             }
             catch (Exception e)
             {
                 // Record the failure
-                var message = $"{this.GetGuid()} Failed to execute post Async {parameterType} {httpContent}: {e.Message}";
+                var message = $"{guid} Failed to execute post Async {parameterType} {httpContent}: {e.Message}";
                 _executedPostPoolList.Add((parameterType, false));
                 this._logger.LogError(message);
                 return message;
             }
         }
-       
+
     }
 }

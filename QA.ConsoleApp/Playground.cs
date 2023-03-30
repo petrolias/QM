@@ -22,6 +22,7 @@ namespace QA.ConsoleApp
             this._serviceProvider = new ServiceCollection()
                 .AddDbRepository()
                 .AddLoggerService()
+                .AddConsumerPostNotifyPublisher<TAppContext, RegistrationModel>()
                 .AddConsumerPersistExecutor<TAppContext, RegistrationModel>()
                 .BuildServiceProvider();
         }
